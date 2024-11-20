@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body class="bg-light">
+
+<!-- Container to center the content -->
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <main class="container text-center">
+        <div class="row gy-4">
+            <h1>Estàs a home</h1>
+            <div class="col-12">
+                <form method="post" action="/start" id="formsave">
+                    <select name="mapId" class="form-select" id="map-select">
+                        <option value="" selected>Elige un mapa:</option>
+                        <option value="1">Mapa 1</option>
+                        <option value="2">Mapa 2</option>
+                        <option value="3">Mapa 3</option>
+                    </select>
+                    <input type="submit" value="enviar">
+                </form>
+            </div>
+            <div class="col-12 text-end mt-3">
+                <a href="/login" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

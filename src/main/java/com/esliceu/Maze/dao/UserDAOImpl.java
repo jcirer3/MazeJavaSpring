@@ -1,7 +1,9 @@
 package com.esliceu.Maze.dao;
 
 import com.esliceu.Maze.model.User;
+import com.esliceu.Maze.utils.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,9 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    
+    @Autowired
+    Encrypter encrypter;
+
     static List<User> users = new ArrayList<>();
 
     static {
@@ -28,19 +32,35 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User findByUsernameAndPassword(String username, String password) {
-        return jdbcTemplate.queryForObject("select * from users where username = ? and password = ?",
-                new BeanPropertyRowMapper<>(User.class),
-                username, password);
+        try {
+            String encryptedPassword = encrypter.encryptedString(password);
+            return jdbcTemplate.queryForObject("select * from users where username = ? and password = ?",
+                    new BeanPropertyRowMapper<>(User.class),
+                    username, encryptedPassword);
+        } catch (Exception e) {
+            throw new RuntimeException("No és vàlid", e);
+        }
     }
     @Override
     public User findByUsername(String username) {
-        return jdbcTemplate.queryForObject("select * from users where username = ?",
-                new BeanPropertyRowMapper<>(User.class),
-                username);
+        try {
+            return jdbcTemplate.queryForObject(
+                    "select * from users where username = ?",
+                    new BeanPropertyRowMapper<>(User.class),
+                    username
+            );
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
     @Override
     public void saveUser(String name, String username, String password) {
-        jdbcTemplate.update("insert into users (name, username, password) VALUES (?, ?, ?)",
-                name, username, password);
+        try {
+            String encryptedPassword = encrypter.encryptedString(password);
+            jdbcTemplate.update("insert into users (name, username, password) VALUES (?, ?, ?)",
+                    name, username, encryptedPassword);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while encrypting password", e);
+        }
     }
 }

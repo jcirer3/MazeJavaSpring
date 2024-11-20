@@ -4,9 +4,12 @@
     import jakarta.servlet.http.HttpSession;
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.stereotype.Controller;
+    import org.springframework.ui.Model;
     import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestParam;
+
+    import java.security.InvalidAlgorithmParameterException;
 
 
     @Controller
@@ -18,24 +21,21 @@
         public String showLoginPage() {
             return "login";
         }
-
+        @GetMapping("/logout")
+        public String logout(HttpSession session) {
+            session.invalidate();
+            return "redirect:/login";
+        }
         @PostMapping("/perform-login")
-        public String performLogin(@RequestParam String username, @RequestParam String password, HttpSession session) {
+        public String performLogin(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
             boolean isValidUser = loginService.authenticate(username, password);
 
             if (isValidUser) {
-                // Successful login: Store user in session
                 session.setAttribute("user", username);
-                return "redirect:/home"; // Redirect to a secured page after login
+                return "redirect:/start";
+            } else {
+                model.addAttribute("error", "Nombre de usuario o contraseña incorrectos.");
+                return "login";
             }
-
-            return "redirect:/login?error";
-        }
-
-        @GetMapping("/logout")
-        public String logout(HttpSession session) {
-            // Invalidate the session to log out the user
-            session.invalidate();
-            return "redirect:/login";
         }
     }

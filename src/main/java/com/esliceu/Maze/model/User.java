@@ -1,10 +1,16 @@
 package com.esliceu.Maze.model;
 
+import java.util.List;
+import java.util.Timer;
+
 public class User {
     private int id;
     private String name;
     private String username;
     private String password;
+    private int coins;
+    private List<Key> keys;
+    private Timer timer;
 
     public User(){
 
