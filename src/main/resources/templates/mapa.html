@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="/js/start.js"></script>
+</head>
+<body class="bg-light">
+<script th:inline="javascript">
+    var roomData = /*[[${roomData}]]*/ {};
+</script>
+<!-- Container to center the content -->
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <main class="container text-center">
+        <h1 class="mb-4">Estàs a mapa</h1>
+        <div class="row justify-content-center align-items-center">
+            <!-- Room Canvas -->
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <canvas id="roomCanvas" width="500" height="500" style="border: 1px solid black;"></canvas>
+            </div>
+
+            <!-- Interactive Cross -->
+            <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+                <img src="/images/cross.webp" usemap="#image-map" alt="Cross" id="cross" class="img-fluid">
+                <map name="image-map">
+                    <area shape="rect" coords="65,0,85,20" alt="North" onclick="handleDirectionClick('North')">
+                    <area shape="rect" coords="65,125,85,147" alt="South" onclick="handleDirectionClick('South')">
+                    <area shape="rect" coords="130,65,150,85" alt="East" onclick="handleDirectionClick('East')">
+                    <area shape="rect" coords="0,60,20,80" alt="West" onclick="handleDirectionClick('West')">
+                </map>
+            </div>
+
+            <!-- Logout Button -->
+            <div class="col-lg-2 col-md-12 mt-3 text-center">
+                <a href="/login" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+    </main>
+</div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

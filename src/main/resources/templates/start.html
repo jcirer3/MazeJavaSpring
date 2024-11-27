@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,11 +17,9 @@
             <h1>Estàs a home</h1>
             <div class="col-12">
                 <form method="post" action="/start" id="formsave">
-                    <select name="mapId" class="form-select" id="map-select">
-                        <option value="" selected>Elige un mapa:</option>
-                        <option value="1">Mapa 1</option>
-                        <option value="2">Mapa 2</option>
-                        <option value="3">Mapa 3</option>
+                    <select id="mapId" name="mapId" required>
+                        <option value="" disabled selected>Select a map</option>
+                        <option th:each="map : ${maps}" th:value="${map.id}" th:text="${map.name}"></option>
                     </select>
                     <input type="submit" value="enviar">
                 </form>
