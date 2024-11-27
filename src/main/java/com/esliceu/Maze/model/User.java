@@ -9,8 +9,9 @@ public class User {
     private String username;
     private String password;
     private int coins;
-    private List<Key> keys;
+    private String keysData;
     private Timer timer;
+    private int idActualRoom;
 
     public User(){
 

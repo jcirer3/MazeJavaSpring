@@ -5,4 +5,5 @@ public class Door {
     private int room1;
     private int room2;
     private boolean is_locked;
+
 }
