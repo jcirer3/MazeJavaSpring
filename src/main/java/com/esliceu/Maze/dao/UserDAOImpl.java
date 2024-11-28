@@ -33,10 +33,9 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findByUsernameAndPassword(String username, String password) {
         try {
-            String encryptedPassword = encrypter.encryptedString(password);
             return jdbcTemplate.queryForObject("select * from users where username = ? and password = ?",
                     new BeanPropertyRowMapper<>(User.class),
-                    username, encryptedPassword);
+                    username, password);
         } catch (Exception e) {
             throw new RuntimeException("No és vàlid", e);
         }

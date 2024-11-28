@@ -1,5 +1,7 @@
 package com.esliceu.Maze.dao;
 
-public interface DoorDAO {
+import com.esliceu.Maze.model.Door;
 
+public interface DoorDAO {
+    Door getDoorByID(int doorId);
 }

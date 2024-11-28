@@ -1,5 +1,6 @@
 package com.esliceu.Maze.filters;
 
+import com.esliceu.Maze.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -14,7 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //Torna true si ha anat be o false si ha anat malament
         System.out.println("Dins interceptor");
         HttpSession session = request.getSession();
-        String user = (String) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         if (user == null) {
             //L'usuari no ha fet login
             response.sendRedirect("/login");

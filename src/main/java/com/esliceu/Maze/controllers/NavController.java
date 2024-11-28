@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 public class NavController {
@@ -20,16 +21,21 @@ public class NavController {
     NavService navService;
 
     @GetMapping("/nav")
-    public String showNavPage(HttpSession session, Model model, @RequestParam String dir) {
-        if (session.getAttribute("user") == null) {
-            return "redirect:/login";
-        }
+    public String showNavPage(HttpSession session, Model model, @SessionAttribute("user") User user, @RequestParam String dir) {
+        int currentRoomId = user.getIdActualRoom();
+        System.out.println("hab actual " + currentRoomId);
 
-        if (dir != null && !dir.isEmpty()) {
-            System.out.println("Direccio en GET: " + dir);
-        }
-        System.out.println("estas en nav");
-        return "nav";
+        Room nextRoom = navService.navigate(currentRoomId, dir);
+        System.out.println("següent hab " + nextRoom.toString());
+
+        user.setIdActualRoom(nextRoom.getId());
+        session.setAttribute("user", user);
+
+        String jsonData = new Gson().toJson(nextRoom);
+        System.out.println(jsonData);
+        model.addAttribute("roomData", jsonData);
+
+        return "mapa";
     }
 
     @PostMapping("/nav")
@@ -39,6 +45,6 @@ public class NavController {
         if (user == null) {
             return "redirect:/login";
         }
-        return "nav"; // Reload the nav page view with updated data.
+        return "nav";
     }
 }

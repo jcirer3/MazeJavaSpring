@@ -20,6 +20,6 @@ public class MazeApplication implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(
 				loginInterceptor
-		).addPathPatterns("/start");
+		).addPathPatterns("/start", "/nav");
 	}
 }

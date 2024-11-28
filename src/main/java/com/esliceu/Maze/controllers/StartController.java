@@ -2,6 +2,7 @@ package com.esliceu.Maze.controllers;
 
 import com.esliceu.Maze.model.Map;
 import com.esliceu.Maze.model.Room;
+import com.esliceu.Maze.model.User;
 import com.esliceu.Maze.services.StartService;
 import com.google.gson.Gson;
 import jakarta.servlet.http.HttpSession;
@@ -22,9 +23,6 @@ public class StartController {
 
     @GetMapping("/start")
     public String showHomePage(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null) {
-            return "redirect:/login";
-        }
         List<Map> maps = startService.getAllMaps();
         model.addAttribute("maps", maps);
         System.out.println("hola en start");
@@ -32,11 +30,15 @@ public class StartController {
     }
 
     @PostMapping("/start")
-    public String getMap(@RequestParam String mapId, Model model) {
+    public String getMap(@RequestParam String mapId, Model model, HttpSession session) {
         System.out.println("Map ID recibido: " + mapId);
 
         Map map = startService.getMapById(Integer.parseInt(mapId));
         Room room = startService.getRoomById(map.getFirstRoom());
+
+        User user = (User) session.getAttribute("user");
+        user.setIdActualRoom(map.getFirstRoom());
+        session.setAttribute("user", user);
         String jsonData = new Gson().toJson(room);
 
 

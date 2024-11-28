@@ -1,5 +1,6 @@
     package com.esliceu.Maze.controllers;
 
+    import com.esliceu.Maze.model.User;
     import com.esliceu.Maze.services.LoginService;
     import jakarta.servlet.http.HttpSession;
     import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@
     import org.springframework.web.bind.annotation.RequestParam;
 
     import java.security.InvalidAlgorithmParameterException;
+    import java.security.NoSuchAlgorithmException;
 
 
     @Controller
@@ -27,15 +29,13 @@
             return "redirect:/login";
         }
         @PostMapping("/perform-login")
-        public String performLogin(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
-            boolean isValidUser = loginService.authenticate(username, password);
+        public String performLogin(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) throws NoSuchAlgorithmException {
+            User user = loginService.authenticate(username, password);
 
-            if (isValidUser) {
-                session.setAttribute("user", username);
+            if (user != null){
+                session.setAttribute("user", user);
                 return "redirect:/start";
-            } else {
-                model.addAttribute("error", "Nombre de usuario o contraseña incorrectos.");
-                return "login";
             }
+            return "login";
         }
     }

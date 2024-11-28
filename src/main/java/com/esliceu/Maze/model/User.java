@@ -1,8 +1,5 @@
 package com.esliceu.Maze.model;
 
-import java.util.List;
-import java.util.Timer;
-
 public class User {
     private int id;
     private String name;
@@ -10,7 +7,7 @@ public class User {
     private String password;
     private int coins;
     private String keysData;
-    private Timer timer;
+    private long timer;
     private int idActualRoom;
 
     public User(){
@@ -63,5 +60,37 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public String getKeysData() {
+        return keysData;
+    }
+
+    public void setKeysData(String keysData) {
+        this.keysData = keysData;
+    }
+
+    public long getTimer() {
+        return timer;
+    }
+
+    public void setTimer(long timer) {
+        this.timer = timer;
+    }
+
+    public int getIdActualRoom() {
+        return idActualRoom;
+    }
+
+    public void setIdActualRoom(int idActualRoom) {
+        this.idActualRoom = idActualRoom;
     }
 }

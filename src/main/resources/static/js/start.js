@@ -8,7 +8,11 @@ if (roomData) {
 }
 
 function drawRoom(room) {
-    console.log(room);
+    console.log("Room data:", room);
+    console.log("North Door:", room.north);
+    console.log("South Door:", room.south);
+    console.log("East Door:", room.east);
+    console.log("West Door:", room.west);
     console.log(typeof(room.north))
     const canvas = document.getElementById('roomCanvas');
     const ctx = canvas.getContext('2d');
@@ -60,8 +64,8 @@ function drawRoom(room) {
     } else {
         const doorStart = (height / 2) - (doorHeight / 2);
         const doorEnd = doorStart + doorHeight;
-        ctx.fillRect(0, 0, wallThickness, doorStart); // Top segment
-        ctx.fillRect(0, doorEnd, wallThickness, height - doorEnd); // Bottom segment
+        ctx.fillRect(0, 0, wallThickness, doorStart);
+        ctx.fillRect(0, doorEnd, wallThickness, height - doorEnd);
     }
 }
 
