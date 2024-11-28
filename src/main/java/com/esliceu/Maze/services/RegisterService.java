@@ -4,16 +4,22 @@ import com.esliceu.Maze.dao.UserDAO;
 import com.esliceu.Maze.exceptions.PasswordToShortException;
 import com.esliceu.Maze.exceptions.UserAlreadyExistException;
 import com.esliceu.Maze.model.User;
+import com.esliceu.Maze.utils.Encrypter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class RegisterService {
     @Autowired
     UserDAO userDAO;
+    @Autowired
+    Encrypter encrypter;
 
-    public void saveUser(String name, String username, String password) throws UserAlreadyExistException, PasswordToShortException {
+    public void saveUser(String name, String username, String password) throws UserAlreadyExistException, PasswordToShortException, NoSuchAlgorithmException {
         if (validaUser(username) && validaPassword(password)){
+            password = encrypter.encryptedString(password);
             userDAO.saveUser(name, username, password);
         } else {
             System.out.println("Error, no se ha creado el usuario");
@@ -32,6 +38,7 @@ public class RegisterService {
         if (user != null && user.getUsername() != null) {
             throw new UserAlreadyExistException("El nom d'usuari ja existeix.");
         }
+        System.out.println("Es true user");
         return true;
     }
 }

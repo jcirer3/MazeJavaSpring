@@ -24,6 +24,7 @@ public class RegisterController {
     @PostMapping("/perform-register")
     public String performRegister (@RequestParam String name, @RequestParam String username, @RequestParam String password, Model model){
         try{
+            System.out.println("registrando");
             registerService.saveUser(name, username, password);
             return "redirect:/login";
         } catch (PasswordToShortException e) {

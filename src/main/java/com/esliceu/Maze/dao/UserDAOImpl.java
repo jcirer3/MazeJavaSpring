@@ -55,10 +55,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void saveUser(String name, String username, String password) {
         try {
-            String encryptedPassword = encrypter.encryptedString(password);
             jdbcTemplate.update("insert into users (name, username, password) VALUES (?, ?, ?)",
-                    name, username, encryptedPassword);
+                    name, username, password);
+            System.out.println("se guarda dao");
         } catch (Exception e) {
+            System.out.println("no se guarda dao");
             throw new RuntimeException("Error while encrypting password", e);
         }
     }
